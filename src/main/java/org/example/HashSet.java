@@ -1,8 +1,7 @@
 package org.example;
 
 import java.io.StringWriter;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 // What is a set???
 // * A collection that does not allow duplicates. Could be used for:
@@ -65,21 +64,17 @@ public class HashSet<K> {
         };
     }
 
-    /**
-     * Puts the given value in the table at key. Overwrites prior values for that key.
-     *
-     * @param value The thing you want to put in the table.
-     */
     public void add(K key) {
         int code = Math.abs(key.hashCode());
         int bucketIndex = code % this.buckets.length;
         if (this.buckets[bucketIndex] == null)
             this.buckets[bucketIndex] = new LinkedList<>();
-        // TASK: Dedupe step...YOU HAVE THIS, I DON'T...
-        this.buckets[bucketIndex].add(key);
-        count++;
-        if (needsResized())
-            resize();
+        if (!this.buckets[bucketIndex].contains(key)) {
+            this.buckets[bucketIndex].add(key);
+            count++;
+            if (needsResized())
+                resize();
+        }
     }
 
     private void resize() {
@@ -132,15 +127,21 @@ public class HashSet<K> {
         }
     }
 
-    // this U b
-    public HashSet<K> union(HashSet<K> b) {
 
-        return null;
+    // this U b
+    public HashSet<K> union(HashSet<K> s1) {
+        HashSet<K> union = new HashSet<>(this.size() + s1.size());
+        Iterator<K> a = this.iterator();
+        Iterator<K> b = s1.iterator();
+        while(a.hasNext()) union.add(a.next());
+        while(b.hasNext()) union.add(b.next());
+        return union;
     }
+
 
     // this I b
     public HashSet<K> intersect(HashSet<K> b) {
-        // TODO:
+
         return null;
     }
 
@@ -174,8 +175,13 @@ public class HashSet<K> {
         data.add("B");
         data.add("C");
         data.add("D");
+        HashSet<String> set2 = new HashSet<>(2);
+        set2.add("A");
+        set2.add("B");
+        set2.add("C");
+        set2.add("D");
         System.out.println(data);
-
+        System.out.println(data.union(set2));
         Iterator<String> i = data.iterator();
         while (i.hasNext())
             System.out.print(i.next() + " ");
