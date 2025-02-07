@@ -1,7 +1,7 @@
 -------------------------------------------------------------------------------
 Test set: org.example.HashSetTest
 -------------------------------------------------------------------------------
-Tests run: 4, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 0.030 s <<< FAILURE! -- in org.example.HashSetTest
+Tests run: 4, Failures: 1, Errors: 1, Skipped: 0, Time elapsed: 0.034 s <<< FAILURE! -- in org.example.HashSetTest
 org.example.HashSetTest.keeps_just_a_single_instance_of_an_added_item -- Time elapsed: 0 s <<< FAILURE!
 java.lang.AssertionError: expected:<1> but was:<2>
 	at org.junit.Assert.fail(Assert.java:89)
