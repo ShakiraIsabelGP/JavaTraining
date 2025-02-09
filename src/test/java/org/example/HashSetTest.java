@@ -110,6 +110,105 @@ public class HashSetTest {
         assertTrue(b.contains(7));
     }
 
+    @Test
+    public void intersection_new_set_of_common_elements_of_two_sets() {
+        HashSet<Integer> IntegerSetA = new HashSet<>(5);
+        HashSet<Integer> IntegerSetB = new HashSet<>(5);
+
+        for (int i = 1; i <= 10; i++)
+            IntegerSetA.add(i);
+        for (int i = 5; i <= 10; i++)
+            IntegerSetB.add(i);
+
+        HashSet<Integer> SetC = IntegerSetA.intersect(IntegerSetB);
+        assertTrue(SetC.contains(5));
+        assertTrue(SetC.contains(6));
+        assertTrue(SetC.contains(7));
+        assertTrue(SetC.contains(8));
+        assertTrue(SetC.contains(9));
+        assertTrue(SetC.contains(10));
+
+        HashSet<Integer> EmptySetA = new HashSet<>(5);
+        HashSet<Integer> IntSetB = new HashSet<>(5);
+        IntSetB.add(1);
+        HashSet<Integer> EmptyIntersectionSet = EmptySetA.intersect(IntSetB);
+        assertTrue(EmptyIntersectionSet.isEmptyBuckets());
+
+    }
+
+    @Test
+    public void intersection_leaves_original_sets_unchanged() {
+        HashSet<Integer> a = new HashSet<>(5);
+        HashSet<Integer> b = new HashSet<>(5);
+
+        a.add(1);
+        a.add(3);
+
+        b.add(3);
+        b.add(7);
+
+        a.intersect(b);
+
+        assertEquals(2, a.size());
+        assertTrue(a.contains(1));
+        assertTrue(a.contains(3));
+        assertFalse(a.contains(7));
+
+        assertEquals(2, b.size());
+        assertFalse(b.contains(1));
+        assertTrue(b.contains(3));
+        assertTrue(b.contains(7));
+    }
+
+    @Test
+    public void different_elements_between_two_sets() {
+        HashSet<Integer> IntegerSetA = new HashSet<>(5);
+        HashSet<Integer> IntegerSetB = new HashSet<>(5);
+
+        for (int i = 1; i <= 10; i++)
+            IntegerSetA.add(i);
+        for (int i = 5; i <= 10; i++)
+            IntegerSetB.add(i);
+
+        HashSet<Integer> SetC = IntegerSetA.difference(IntegerSetB);
+        for (int i = 1; i < 5; i++)
+            assertTrue(SetC.contains(i));
+
+        HashSet<Integer> EmptySetA = new HashSet<>(5);
+        HashSet<Integer> IntSetB = new HashSet<>(5);
+        IntSetB.add(1);
+        HashSet<Integer> SetC2 = EmptySetA.difference(IntSetB);
+        assertFalse(SetC2.isEmptyBuckets());
+        assertTrue(SetC2.contains(1));
+    }
+
+
+    @Test
+    public void difference_leaves_original_sets_unchanged() {
+        HashSet<Integer> a = new HashSet<>(5);
+        HashSet<Integer> b = new HashSet<>(5);
+
+        a.add(1);
+        a.add(3);
+
+        b.add(3);
+        b.add(7);
+
+        a.difference(b);
+
+        assertEquals(2, a.size());
+        assertTrue(a.contains(1));
+        assertTrue(a.contains(3));
+        assertFalse(a.contains(7));
+
+        assertEquals(2, b.size());
+        assertFalse(b.contains(1));
+        assertTrue(b.contains(3));
+        assertTrue(b.contains(7));
+
+
+    }
+
     /********************************************************************************
      * HELPER METHODS BELOW THIS LINE
      ********************************************************************************/

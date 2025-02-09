@@ -129,27 +129,59 @@ public class HashSet<K> {
 
 
     // this U b
-    public HashSet<K> union(HashSet<K> s1) {
-        HashSet<K> union = new HashSet<>(this.size() + s1.size());
+    public HashSet<K> union(HashSet<K> b) {
+        HashSet<K> union = new HashSet<>(this.size() + b.size());
         Iterator<K> a = this.iterator();
-        Iterator<K> b = s1.iterator();
-        while(a.hasNext()) union.add(a.next());
-        while(b.hasNext()) union.add(b.next());
+        Iterator<K> c = b.iterator();
+        while (a.hasNext()) union.add(a.next());
+        while (c.hasNext()) union.add(c.next());
         return union;
     }
 
+    public boolean isEmptyBuckets() {
+        Iterator<K> a = this.iterator();
+        if (a.hasNext()) return false;
+        return true;
+    }
 
     // this I b
     public HashSet<K> intersect(HashSet<K> b) {
+        HashSet<K> intersection = new HashSet<>(this.size() + b.size());
+        Iterator<K> setOne = this.iterator();
+        if (b.isEmptyBuckets() || this.isEmptyBuckets()) {
+            //Return empty set
+            return intersection;
+        }
 
-        return null;
+        while (setOne.hasNext()) {
+            K i = setOne.next();
+            if (b.contains(i))
+                intersection.add(i);
+        }
+
+
+        return intersection;
     }
 
     // this - b
     public HashSet<K> difference(HashSet<K> b) {
-        // TODO:
-        return null;
+        HashSet<K> difference = new HashSet<>(this.size() + b.size());
+        Iterator<K> setOne = this.iterator();
+        Iterator<K> setTwo = b.iterator();
+        while (setOne.hasNext()) {
+            K i = setOne.next();
+            if (!b.contains(i))
+                difference.add(i);
+        }
+        while (setTwo.hasNext()) {
+            K i = setTwo.next();
+            if (!this.contains(i))
+                difference.add(i);
+        }
+
+        return difference;
     }
+
 
     public int size() {
         return count;
@@ -171,20 +203,16 @@ public class HashSet<K> {
 
     public static void main(String[] args) {
         HashSet<String> data = new HashSet<>(2);
-        data.add("A");
         data.add("B");
-        data.add("C");
         data.add("D");
         HashSet<String> set2 = new HashSet<>(2);
         set2.add("A");
         set2.add("B");
         set2.add("C");
         set2.add("D");
-        System.out.println(data);
-        System.out.println(data.union(set2));
+        System.out.println(data.intersect(set2));
+
         Iterator<String> i = data.iterator();
-        while (i.hasNext())
-            System.out.print(i.next() + " ");
     }
 }
 
