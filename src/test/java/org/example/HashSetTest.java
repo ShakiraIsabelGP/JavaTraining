@@ -1,6 +1,7 @@
 package org.example;
 
 import static org.junit.Assert.*;
+
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -99,6 +100,7 @@ public class HashSetTest {
 
         a.union(b);
 
+        assertNull(a.union(null));
         assertEquals(2, a.size());
         assertTrue(a.contains(1));
         assertTrue(a.contains(3));
@@ -121,12 +123,11 @@ public class HashSetTest {
             IntegerSetB.add(i);
 
         HashSet<Integer> SetC = IntegerSetA.intersect(IntegerSetB);
-        assertTrue(SetC.contains(5));
-        assertTrue(SetC.contains(6));
-        assertTrue(SetC.contains(7));
-        assertTrue(SetC.contains(8));
-        assertTrue(SetC.contains(9));
-        assertTrue(SetC.contains(10));
+
+        for (int i = 5; i <= 10; i++)
+            assertTrue(SetC.contains(i));
+
+        assertNull(IntegerSetA.intersect(null));
 
         HashSet<Integer> EmptySetA = new HashSet<>(5);
         HashSet<Integer> IntSetB = new HashSet<>(5);
@@ -173,6 +174,8 @@ public class HashSetTest {
         HashSet<Integer> SetC = IntegerSetA.difference(IntegerSetB);
         for (int i = 1; i < 5; i++)
             assertTrue(SetC.contains(i));
+
+        assertNull(IntegerSetA.difference(null));
 
         HashSet<Integer> EmptySetA = new HashSet<>(5);
         HashSet<Integer> IntSetB = new HashSet<>(5);
